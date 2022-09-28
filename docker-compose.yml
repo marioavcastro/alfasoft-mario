@@ -1,0 +1,39 @@
+version: '3'
+
+networks:
+  sonar_network:
+
+services:
+  sonarqube:
+    build: ./sonarqube
+    container_name: sonarqube-2
+    volumes:
+      - ./:/app
+    ports:
+      - 9000:9000
+    networks:
+      - sonar_network
+
+  exakat:
+    build: ./exacat
+    container_name: exakat
+    networks:
+      - sonar_network
+  
+  phpmd:
+    build: ./phpmd
+    container_name: phpmd
+    networks:
+      - sonar_network
+  
+  phpmetrics:
+    build: ./phpmetrics
+    container_name: phpmetrics
+    networks:
+      - sonar_network
+  
+  progpilot:
+    build: ./progpilot
+    container_name: progpilot
+    networks:
+      - sonar_network

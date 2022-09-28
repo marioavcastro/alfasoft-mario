@@ -1,0 +1,14 @@
+FROM ubuntu
+
+RUN mkdir exakat \
+    cd exakat \
+    curl exakat.phar https://www.exakat.io/versions/index.php?file=latest \
+    curl apache-tinkerpop-gremlin-server-3.4.12-bin.zip https://www.exakat.io/versions/apache-tinkerpop-gremlin-server-3.4.12-bin.zip \
+    unzip apache-tinkerpop-gremlin-server-3.4.12-bin.zip \
+    mv apache-tinkerpop-gremlin-server-3.4.12 tinkergraph \
+    rm -rf apache-tinkerpop-gremlin-server-3.4.12-bin.zip \
+    cd tinkergraph \
+    ./bin/gremlin-server.sh install org.apache.tinkerpop neo4j-gremlin 3.4.12 \
+    cd ..
+
+CMD [ "php", "exakat.phar", "doctor" ]
